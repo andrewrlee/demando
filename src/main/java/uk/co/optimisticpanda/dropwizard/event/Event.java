@@ -11,7 +11,6 @@ import com.google.common.base.Throwables;
 public class Event<D, C extends Enum<C>> {
 	private static final ObjectMapper mapper = new ObjectMapper();
 
-	
 	private final C type;
 	private final D payload;
 	private final String uuid;

@@ -1,6 +1,5 @@
 package uk.co.optimisticpanda.dropwizard.event;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,7 +9,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
 
 import uk.co.optimisticpanda.dropwizard.Environment;
 
@@ -23,15 +24,11 @@ public class EventResource {
 	public static enum Categories{ CREATE, DELETE, UPDATE}
 	private final EventStore store;
 
+	@Context
+    UriInfo uriInfo;
+	
 	public EventResource(EventStore store) {
 		this.store = store;
-	}
-
-	@GET
-	@Timed
-	@Path("{id}")
-	public Event<Environment,Categories> getEnvironment(@PathParam("id") String id) {
-		return store.getEvent(id);
 	}
 
 	@GET
@@ -67,8 +64,8 @@ public class EventResource {
 		return new EventList<Environment,Categories>(
 				payload, //
 				Categories.class, 
-				"http://localhost:8080/services/environment-event/", //
-				"http://localhost:8080/service/environment/" //
+				uriInfo.getAbsolutePath().toString(), //
+				uriInfo.getBaseUri().toString() + "environment/" //
 				);
 	}
 }
