@@ -3,9 +3,11 @@ package uk.co.optimisticpanda.dropwizard;
 import java.util.Iterator;
 import java.util.List;
 
+import uk.co.optimisticpanda.dropwizard.event.Resource;
+
 import com.google.common.collect.Lists;
 
-public class Environment {
+public class Environment implements Resource{
 	private String name;
 	private String link;
 	private long id;
@@ -70,6 +72,10 @@ public class Environment {
 
 	public List<Environment> getChildren() {
 		return children;
+	}
+	
+	public String getUniqueId() {
+		return String.valueOf(id);
 	}
 
 }

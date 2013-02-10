@@ -2,6 +2,8 @@ package uk.co.optimisticpanda.dropwizard;
 
 import static com.sun.jersey.api.core.ResourceConfig.PROPERTY_CONTAINER_REQUEST_FILTERS;
 import uk.co.optimisticpanda.dropwizard.atom.GenericAbderaSupport;
+import uk.co.optimisticpanda.dropwizard.event.EventResource;
+import uk.co.optimisticpanda.dropwizard.event.EventStore;
 import uk.co.optimisticpanda.dropwizard.odata.OdataContainerRequestFilter;
 
 import com.yammer.dropwizard.Service;

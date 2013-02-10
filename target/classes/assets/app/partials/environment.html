@@ -1,0 +1,23 @@
+ <h4>Environment: {{id}}</h4>
+
+<form class="form-horizontal">
+	<div class="control-group">
+		<label class="control-label" for="inputEnvironmentName">Environment Name</label>
+		<div class="controls">
+			<input data-ng-model="environment.name" type="text" id="inputEnvironmentName" placeholder="Name" value="{{environment.name}}">
+		</div>
+		
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="inputLink">Link</label>
+		<div class="controls">
+			<input data-ng-model="environment.link" type="text" id="inputLink" placeholder="Link" value="{{environment.link}}">
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<button type="submit" class="btn" data-ng-click="save()">Save</button>
+			&nbsp;<button type="submit" class="btn" data-ng-click="delete()">Delete</button>
+		</div>
+	</div>
+</form>

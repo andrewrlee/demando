@@ -1,4 +1,4 @@
-package uk.co.optimisticpanda.dropwizard;
+package uk.co.optimisticpanda.dropwizard.event;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -8,24 +8,23 @@ import java.util.UUID;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 
-public class Event<D> {
+public class Event<D, C extends Enum<C>> {
 	private static final ObjectMapper mapper = new ObjectMapper();
 
-	public enum Type{ CREATE, DELETE, UPDATE}
 	
-	private final Type type;
+	private final C type;
 	private final D payload;
 	private final String uuid;
 	private final Date updateDate;
 	
-	public Event(Type type, D payload){
+	public Event(C type, D payload){
 		this.uuid = UUID.randomUUID().toString();
 		this.updateDate = new Date();
 		this.payload = payload;
 		this.type = type;
 	}
 
-	public Type getType() {
+	public C getType() {
 		return type;
 	}
 
