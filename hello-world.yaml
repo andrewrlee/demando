@@ -1,0 +1,11 @@
+database:  
+    driverClass: org.postgresql.Driver
+    # the username
+    user: pg-user
+    # the password
+    password: iAMs00perSecrEET
+    url: http://postgress2
+
+http:
+  rootPath: /service/*    
+    
