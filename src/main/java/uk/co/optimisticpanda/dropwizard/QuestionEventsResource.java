@@ -25,11 +25,11 @@ import com.yammer.metrics.annotation.Timed;
 @Produces({MediaType.APPLICATION_ATOM_XML})
 public class QuestionEventsResource {
 
-	@Context
-	UriInfo uriInfo;
-	private final QuestionEventDao dao;
+    @Context
+    UriInfo uriInfo;
+    private final QuestionEventDao dao;
 
-	public QuestionEventsResource (QuestionEventDao dao) {
+    public QuestionEventsResource (QuestionEventDao dao) {
         this.dao = dao;
     }
 
@@ -52,7 +52,8 @@ public class QuestionEventsResource {
     @Path("/{id}")
     public void update(@PathParam("uuid") String uuid, Event<Question<?>, Change> event) {
     	Preconditions.checkArgument(uuid == event.getUuid(), "Trying to update wrong environment.");
-//    	dao.update(question.getType(), question);
+	//TODO write
+	//dao.update(question.getType(), question);
     }
     
     @POST
@@ -71,9 +72,9 @@ public class QuestionEventsResource {
     
     public EventList<Question<?>, Change> wrap(List<Event<Question<?>,Change>> events) {
     	return new EventList<Question<?>,Change>(
-    			events,                               //
-    			Change.class,                         //
-    			uriInfo.getAbsolutePath().toString(), //
-    			uriInfo.getBaseUri().toString() + "question/");
+    		events,                               //
+    		Change.class,                         //
+    		uriInfo.getAbsolutePath().toString(), //
+    		uriInfo.getBaseUri().toString() + "question/");
 	}
 }
