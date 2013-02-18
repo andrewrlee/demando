@@ -4,12 +4,12 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class DateGenerator {
+public class RandomDateProvider {
 
 	private static Random random = new Random();
 
 	// Generates events for the last 30 days - roughly 50/day
-	public void collect(DateVisitor visitor) {
+	public void provide(DateVisitor visitor) {
 		long now = new Date().getTime();
 		long inThePast = TimeUnit.DAYS.toMillis(30);
 		Date startDate = new Date(now - inThePast);

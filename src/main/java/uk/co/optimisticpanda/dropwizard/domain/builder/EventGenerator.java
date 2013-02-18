@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import uk.co.optimisticpanda.dropwizard.dao.QuestionEventDao.Change;
 import uk.co.optimisticpanda.dropwizard.domain.Question;
 import uk.co.optimisticpanda.dropwizard.event.Event;
-import uk.co.optimisticpanda.dropwizard.util.DateGenerator.DateVisitor;
+import uk.co.optimisticpanda.dropwizard.util.RandomDateProvider.DateVisitor;
 
 import com.google.common.collect.Lists;
 
