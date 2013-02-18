@@ -1,10 +1,8 @@
 database:  
-    driverClass: org.postgresql.Driver
-    # the username
-    user: pg-user
-    # the password
-    password: iAMs00perSecrEET
-    url: http://postgress2
+    driverClass: com.mysql.jdbc.Driver
+    user: root
+    password: 
+    url: jdbc:mysql://localhost:3306/signpost
 
 http:
   rootPath: /service/*    

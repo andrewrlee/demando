@@ -1,0 +1,23 @@
+ <h4>Question: {{id}}</h4>
+
+<form class="form-horizontal">
+	<div class="control-group">
+		<label class="control-label" for="inputQuestionName">Question Name</label>
+		<div class="controls">
+			<textarea cols="120" rows="5" data-ng-model="question.questionText" id="inputQuestionText" ></textarea>
+		</div>
+		
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="inputLink">Link</label>
+		<div class="controls">
+			<input data-ng-model="question.type" type="text" id="inputLink" placeholder="Link" value="{{question.type}}">
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<button type="submit" class="btn" data-ng-click="save()">Save</button>
+			&nbsp;<button type="submit" class="btn" data-ng-click="delete()">Delete</button>
+		</div>
+	</div>	
+</form>

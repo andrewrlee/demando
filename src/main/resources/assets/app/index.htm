@@ -2,7 +2,7 @@
 <html lang="en" ng-app="myApp">
 <head>
 <meta charset="utf-8">
-<title>sIgN pOsT</title>
+<title>DEMANDO</title>
 <link rel="stylesheet" href="css/app.css" />
 <link rel="stylesheet" href="/css/app.css">
 <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -12,16 +12,16 @@
 	<div class="container home">
 		<div class="page-header">
 			<a class="main-title" href="/#/"><h1>
-					=sIgN=pOsT=&nbsp;<small>Where do you want to be?</small>
+					=DEMANDO=&nbsp;<small>questions..</small>
 				</a><small class="pull-right">v.<span app-version></span></small></h1> 	
 		</div>
 		<div class="container">
 			<div class="row">
 				<div class="span2">
 					<ul class="nav nav-list" data-ng-controller="NavController">
-						<li class="nav-header">Environments</li>
-						<li data-ng-repeat="env in environments">
-						<a href="#/environment/{{env.id}}">{{env.name}}</a></li>
+						<li class="nav-header">Questions</li>
+						<li data-ng-repeat="question in questions">
+						<a href="#/question/{{question.id}}">{{question.id}}</a></li>
 						<li class="divider"></li>
 					</ul>
 				</div>
