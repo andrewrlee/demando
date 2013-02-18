@@ -42,13 +42,15 @@ public class TestDataLoadCommand extends EnvironmentCommand<DemandoConfiguration
 			log.info("Inserting event: {}", event.getId());
 			eventDao.insert(event.getEventType(), event);
 			
+			Question<?> question = event.getPayload();
+			
 			if (event.getEventType() == CREATE) {
-				log.info("Creating Question: {}", event.getPayload().getId());
-				questionDao.insert(event.getPayload().getType(), event.getPayload());
+				log.info("Creating Question: {}", question);
+				questionDao.insert(question.getType(), question);
 			
 			} else if (event.getEventType() == UPDATE) {
-				log.info("Updating Question: {}", event.getPayload().getId());
-				questionDao.update(event.getPayload().getType(), event.getPayload());
+				log.info("Updating Question: {}", question);
+				questionDao.update(question.getType(), question);
 			}
 		}
 	}

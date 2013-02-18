@@ -46,7 +46,7 @@ public abstract class Question<THIS extends Question<THIS>> implements Resource{
 	
 	@Override
 	public String toString() {
-		return type + ":\t" + questionText;
+		return "ID: " +id + ", TYPE: " + type + ", QUESTION TEXT:" + questionText;
 	}
 }
 
