@@ -16,12 +16,10 @@ import com.google.common.base.Preconditions;
 import com.yammer.metrics.annotation.Timed;
 
 @Path("/question")
-//@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_ATOM_XML})
 @Produces({MediaType.APPLICATION_JSON})
 public class QuestionResource {
 
-	private final QuestionDao dao;
-
+    private final QuestionDao dao;
 	public QuestionResource (QuestionDao dao) {
         this.dao = dao;
     }
@@ -29,14 +27,14 @@ public class QuestionResource {
     @GET
     @Timed
     @Path("/{id}")
-    public Question<?> getEnvironment(@PathParam("id") long id) {
+    public Question<?> getQuestion(@PathParam("id") long id) {
         return dao.get(id);
     }
     
     @GET
     @Timed
     @Path("/")
-    public Collection<Question<?>> getEnvironments() {
+    public Collection<Question<?>> getQuestions() {
     	return dao.getAll();
     }
 
