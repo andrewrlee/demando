@@ -1,4 +1,4 @@
-package uk.co.optimisticpanda.dropwizard.domain.builder;
+package uk.co.optimisticpanda.dropwizard.util;
 
 import java.util.Date;
 import java.util.Random;
@@ -20,7 +20,9 @@ public class DateGenerator {
 			if (now < newTime) {
 				break;
 			}
-			visitor.visit(new Date(newTime));
+			if(!visitor.visit(new Date(newTime))){
+				return;
+			};
 			currentDate = newTime;
 		}
 	}
@@ -32,7 +34,7 @@ public class DateGenerator {
 	}
 
 	public interface DateVisitor {
-		public void visit(Date randomDate);
+		public boolean visit(Date randomDate);
 	}
 
 }

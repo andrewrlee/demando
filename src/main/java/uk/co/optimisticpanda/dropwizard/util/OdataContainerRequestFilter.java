@@ -1,4 +1,4 @@
-package uk.co.optimisticpanda.dropwizard.odata;
+package uk.co.optimisticpanda.dropwizard.util;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,6 +12,8 @@ import com.sun.jersey.spi.container.ContainerRequest;
 import com.sun.jersey.spi.container.ContainerRequestFilter;
 
 // Based on this: http://stackoverflow.com/questions/9382324/jersey-and-odata-key-path-param-format
+// This allows jetty to receive odata style requests like this: www.localhost.com/customer(1) 
+// Doesn't provide any other odata operations
 public class OdataContainerRequestFilter implements ContainerRequestFilter {
 
 	private static Logger logger = LoggerFactory.getLogger(OdataContainerRequestFilter.class);

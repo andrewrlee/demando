@@ -1,7 +1,9 @@
 package uk.co.optimisticpanda.dropwizard.domain;
 
+import uk.co.optimisticpanda.dropwizard.event.Resource;
 
-public abstract class Question<THIS extends Question<THIS>> {
+
+public abstract class Question<THIS extends Question<THIS>> implements Resource{
 
 	private Long id;
 	private QuestionType type;
@@ -10,6 +12,7 @@ public abstract class Question<THIS extends Question<THIS>> {
 	public Question(Long id, QuestionType type, String question){
 		this.type = type;
 		this.questionText = question;
+		this.id = id;
 	}
 	public Question(){
 	}

@@ -9,6 +9,6 @@ public class BooleanQuestion extends Question<BooleanQuestion>{
 	}
 	@Override
 	public BooleanQuestion copy() {
-		return new BooleanQuestion(null, this.getQuestionText());
+		return new BooleanQuestion(this.getId(), this.getQuestionText());
 	}
 }

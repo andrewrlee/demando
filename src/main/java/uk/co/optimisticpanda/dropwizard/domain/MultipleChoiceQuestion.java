@@ -31,6 +31,7 @@ public class MultipleChoiceQuestion extends Question<MultipleChoiceQuestion> {
 	public MultipleChoiceQuestion copy() {
 		MultipleChoiceQuestion question = new MultipleChoiceQuestion(null, this.getQuestionText());
 		question.options.addAll(this.options);
+		question.setId(this.getId());
 		return question;
 	}
 }

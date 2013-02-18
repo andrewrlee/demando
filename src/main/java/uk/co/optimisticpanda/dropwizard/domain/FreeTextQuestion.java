@@ -43,6 +43,6 @@ public class FreeTextQuestion extends Question<FreeTextQuestion>{
 	
 	@Override
 	public FreeTextQuestion copy() {
-		return new FreeTextQuestion(this);
+		return new FreeTextQuestion(this.getId(), this.inputType, this.getQuestionText());
 	}
 }

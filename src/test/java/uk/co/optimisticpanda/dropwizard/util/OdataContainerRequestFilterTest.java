@@ -1,4 +1,4 @@
-package uk.co.optimisticpanda.dropwizard.odata;
+package uk.co.optimisticpanda.dropwizard.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,6 +10,8 @@ import java.net.URISyntaxException;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import uk.co.optimisticpanda.dropwizard.util.OdataContainerRequestFilter;
 
 public class OdataContainerRequestFilterTest {
 

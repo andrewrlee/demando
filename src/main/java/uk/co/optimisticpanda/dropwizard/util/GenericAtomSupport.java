@@ -1,4 +1,4 @@
-package uk.co.optimisticpanda.dropwizard.atom;
+package uk.co.optimisticpanda.dropwizard.util;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -55,7 +55,7 @@ public class GenericAtomSupport implements MessageBodyWriter<Object> {
 		entry.setId(event.getUuid());
 		entry.setUpdated(event.getCreatedDate());
 		entry.addLink(list.getEventRootResourceUrl() + event.getUuid(), "self");
-		entry.addLink(list.getPayloadRootResourceUrl() + event.getUuid(), "related");
+		entry.addLink(list.getPayloadRootResourceUrl() + event.getPayload().getId(), "related");
 		return entry;
 	}
 

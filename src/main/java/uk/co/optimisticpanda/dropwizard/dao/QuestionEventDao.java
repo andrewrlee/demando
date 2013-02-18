@@ -14,11 +14,11 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 
-import uk.co.optimisticpanda.dropwizard.dao.CustomJdbiBinders.BindEnumName;
 import uk.co.optimisticpanda.dropwizard.dao.QuestionEventDao.EventMapper;
 import uk.co.optimisticpanda.dropwizard.domain.Question;
 import uk.co.optimisticpanda.dropwizard.domain.QuestionType;
 import uk.co.optimisticpanda.dropwizard.event.Event;
+import uk.co.optimisticpanda.dropwizard.util.CustomJdbiBinders.BindEnumName;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,11 +38,14 @@ public interface QuestionEventDao {
 	List<Event<Question<?>, Change>> getAll();
 
 	@SqlQuery("select * from question_event where uuid = :uuid")
-	Question<?> get(@Bind("uuid") String uuid);
+	Event<Question<?>, Change> get(@Bind("uuid") String uuid);
 
 	@SqlUpdate("delete from question_event where uuid = :uuid")
-	void deleteQuestion(@Bind("uuid") String id);
+	void delete(@Bind("uuid") String id);
 
+//	@SqlQuery("select * from question_event where createdDate < '2013-01-21' and createdDate > '2013-01-20'")
+//	Event<Question<?>, Change> get(@Bind("uuid") String uuid);
+	
 	public enum Change {
 		CREATE, UPDATE, DELETE
 	}
@@ -59,7 +62,9 @@ public interface QuestionEventDao {
 			try {
 				JsonNode node = mapper.readTree(resultSet.getString("payload"));
 				QuestionType type = QuestionType.valueOf(node.get("type").asText());
+				Long questionId = node.get("id").asLong();
 				Question<?> payload = questionMapper.createQuestion(type, resultSet.getString("payload"));
+				payload.setId(questionId);
 				return new Event<Question<?>, Change>(id, uuid, change, payload, resultSet.getDate("createdDate"));
 			} catch (IOException e) {
 				throw Throwables.propagate(e);

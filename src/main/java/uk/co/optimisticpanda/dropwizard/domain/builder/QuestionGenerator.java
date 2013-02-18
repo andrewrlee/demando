@@ -18,12 +18,6 @@ import com.google.common.io.LineProcessor;
 public class QuestionGenerator {
 	private AtomicLong id = new AtomicLong();
 	
-	public static void main(String[] args) throws IOException {
-		for (Question<?> question : new QuestionGenerator().gather()) {
-			System.out.println(question);
-		}
-	}
-	
 	public List<Question<?>> gather() throws IOException{
 		return Files.readLines(new File("src/main/resources/questions.txt"), Charsets.UTF_8, new LineProcessor<List<Question<?>>>() {
 			private List<Question<?>> questions = Lists.newArrayList();
@@ -32,12 +26,13 @@ public class QuestionGenerator {
 			}
 
 			public boolean processLine(String line) throws IOException {
-				if(!line.trim().startsWith("#")){
-					if(line.trim().startsWith("-")){
-						String question = line.trim().substring(1).trim();
+				String trimmedLine = line.trim();
+				if(!trimmedLine.startsWith("#")){
+					if(trimmedLine.startsWith("-")){
+						String question = trimmedLine.substring(1).trim();
 						questions.add(new BooleanQuestion(id.getAndIncrement(), question));
 					}else{
-						questions.add(new FreeTextQuestion(id.getAndIncrement(), InputType.FIELD, line.trim()));
+						questions.add(new FreeTextQuestion(id.getAndIncrement(), InputType.FIELD, trimmedLine));
 					}
 				}
 				return true;

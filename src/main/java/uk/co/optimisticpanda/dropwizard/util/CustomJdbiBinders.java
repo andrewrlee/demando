@@ -1,4 +1,4 @@
-package uk.co.optimisticpanda.dropwizard.dao;
+package uk.co.optimisticpanda.dropwizard.util;
 
 import java.io.IOException;
 import java.io.StringWriter;

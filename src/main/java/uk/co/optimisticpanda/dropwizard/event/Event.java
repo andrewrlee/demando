@@ -8,7 +8,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 
-public class Event<D, C extends Enum<C>> {
+public class Event<D extends Resource, C extends Enum<C>> {
 	private static final ObjectMapper mapper = new ObjectMapper();
 
 	private Long id;

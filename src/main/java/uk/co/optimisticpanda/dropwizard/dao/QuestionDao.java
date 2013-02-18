@@ -13,13 +13,13 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 
-import uk.co.optimisticpanda.dropwizard.dao.CustomJdbiBinders.BindAsJson;
-import uk.co.optimisticpanda.dropwizard.dao.CustomJdbiBinders.BindEnumName;
 import uk.co.optimisticpanda.dropwizard.dao.QuestionDao.QuestionMapper;
 import uk.co.optimisticpanda.dropwizard.domain.BooleanQuestion;
 import uk.co.optimisticpanda.dropwizard.domain.FreeTextQuestion;
 import uk.co.optimisticpanda.dropwizard.domain.Question;
 import uk.co.optimisticpanda.dropwizard.domain.QuestionType;
+import uk.co.optimisticpanda.dropwizard.util.CustomJdbiBinders.BindAsJson;
+import uk.co.optimisticpanda.dropwizard.util.CustomJdbiBinders.BindEnumName;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
