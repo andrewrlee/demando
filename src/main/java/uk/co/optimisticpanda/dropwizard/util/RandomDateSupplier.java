@@ -4,9 +4,16 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class RandomDateProvider {
+import com.google.common.base.Supplier;
+
+public class RandomDateSupplier implements Supplier<Date> {
 
 	private static Random random = new Random();
+	private Long currentTime = new Date().getTime();
+
+	public Date get() {
+		return new Date(currentTime + getRandomDuration());
+	}
 
 	// Generates events for the last 30 days - roughly 50/day
 	public void provide(DateVisitor visitor) {
@@ -16,13 +23,14 @@ public class RandomDateProvider {
 
 		long currentDate = startDate.getTime();
 		while (currentDate < now) {
-			long newTime = currentDate + getRandomDuration();
+			long newTime = get().getTime();
 			if (now < newTime) {
 				break;
 			}
-			if(!visitor.visit(new Date(newTime))){
+			if (!visitor.visit(new Date(newTime))) {
 				return;
-			};
+			}
+			;
 			currentDate = newTime;
 		}
 	}

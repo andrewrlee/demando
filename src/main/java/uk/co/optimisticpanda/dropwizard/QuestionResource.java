@@ -37,7 +37,7 @@ public class QuestionResource {
     public Collection<Question<?>> getQuestions() {
     	return dao.getAll();
     }
-
+    
     @POST
     @Timed
     @Path("/{id}")

@@ -1,7 +1,7 @@
 package uk.co.optimisticpanda.dropwizard.event;
 
-public interface Resource {
+public interface Resource<D> {
 
-	Long getId();
+	D getId();
 	
 }

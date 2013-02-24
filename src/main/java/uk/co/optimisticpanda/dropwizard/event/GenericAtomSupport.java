@@ -1,4 +1,4 @@
-package uk.co.optimisticpanda.dropwizard.util;
+package uk.co.optimisticpanda.dropwizard.event;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -16,8 +16,6 @@ import org.apache.abdera.Abdera;
 import org.apache.abdera.model.Entry;
 import org.apache.abdera.model.Feed;
 
-import uk.co.optimisticpanda.dropwizard.event.Event;
-import uk.co.optimisticpanda.dropwizard.event.EventList;
 
 @Provider
 @Produces(MediaType.APPLICATION_ATOM_XML)
@@ -35,27 +33,38 @@ public class GenericAtomSupport implements MessageBodyWriter<Object> {
 
 	public void writeTo(Object list, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream) throws IOException, WebApplicationException {
-		EventList<?, ?> eventList = (EventList<?, ?>) list;
+		EventList<?> eventList = (EventList<?>) list;
 		Feed feed = getAbdera().getFactory().newFeed();
+		feed.setTitle(eventList.getTitle());
 
 		for (String category : eventList.getCategories()) {
 			feed.addCategory(category);
 		}
-		for (Event<?, ?> event : eventList.getEvents()) {
-			feed.addEntry(createEntry(eventList, event));
+		for (Event<?> event : eventList) {
+			Entry entry = createEntry(event);
+			eventList.addEntryUrls(entry, event.getPayload());
+			feed.addEntry(entry);
 		}
-		feed.addLink(eventList.getEventRootResourceUrl(), "self");
+		
+		eventList.addFeedUrls(feed);
 		feed.getDocument().writeTo(entityStream);
 	}
 
-	private Entry createEntry(EventList<?,?> list, Event<?, ?> event) {
+	private Entry createEntry(Event<?> event) {
 		Entry entry = getAbdera().newEntry();
-		entry.addCategory(event.getEventType().name());
+		
+		entry.addCategory(event.getCategory());
 		entry.setContent(event.getContent(), MediaType.APPLICATION_JSON);
+		
 		entry.setId(event.getUuid());
+		entry.setTitle(event.getCategory() + " : "+ event.getPayload().getClass() + " [" +  event.getId() + "]");
+		
+		entry.setSummary(event.getContent());
+		
+		entry.addAuthor("SYSTEM");
+		
 		entry.setUpdated(event.getCreatedDate());
-		entry.addLink(list.getEventRootResourceUrl() + event.getUuid(), "self");
-		entry.addLink(list.getPayloadRootResourceUrl() + event.getPayload().getId(), "related");
+		
 		return entry;
 	}
 

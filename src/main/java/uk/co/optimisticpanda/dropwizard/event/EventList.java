@@ -1,42 +1,56 @@
 package uk.co.optimisticpanda.dropwizard.event;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import com.google.common.collect.Lists;
+import javax.ws.rs.core.UriBuilder;
 
-public class EventList<D extends Resource, E extends Enum<E>> {
+import org.apache.abdera.model.Entry;
+import org.apache.abdera.model.Feed;
 
-	private List<Event<D,E>> events;
-	private String eventRootResourceUrl;
-	private String payloadRootResourceUrl;
-	private final Class<E> categoryType;
+import uk.co.optimisticpanda.dropwizard.util.batch.Batch;
+
+public class EventList<D extends Resource<?>> implements Iterable<Event<D>> {
+
+	private final List<Event<D>> events;
+	private final String[] categories;
+	private final String title;
+	private LinkProvider linkProvider;
 	
-	public EventList(List<Event<D,E>> events, Class<E> categoryType, String eventRootResourceUrl, String payloadRootResourceUrl) {
+	public enum FeedType{
+		RECENT_EVENTS, ARCHIVE
+	}
+	
+	public EventList(List<Event<D>> events, String[] categories, String title, Batch batch) {
 		this.events = events;
-		this.categoryType = categoryType;
-		this.eventRootResourceUrl = eventRootResourceUrl;
-		this.payloadRootResourceUrl = payloadRootResourceUrl;
+		this.categories = categories;
+		this.title = title;
+		this.linkProvider = new LinkProvider(batch);
 	}
 
-	public List<Event<D,E>> getEvents() {
-		return events;
+	public String getTitle() {
+		return title;
+	}
+		
+	public Iterator<Event<D>> iterator() {
+		return events.iterator();
 	}
 
-	public String getEventRootResourceUrl() {
-		return eventRootResourceUrl;
+	public void prepareLinks(UriBuilder notificationUriBuilder, UriBuilder payloadUriBuilder, FeedType feedType){
+		linkProvider.prepare(notificationUriBuilder, payloadUriBuilder, feedType);
 	}
-
-	public String getPayloadRootResourceUrl() {
-		return payloadRootResourceUrl;
+	
+	public void addFeedUrls(Feed feed) {
+		linkProvider.addFeedUrls(feed);
+	}
+	
+	public void addEntryUrls(Entry entry, Resource<?> resource) {
+		linkProvider.addEntryUrls(entry, resource);
 	}
 	
 	public String[] getCategories(){
-		ArrayList<String> list = Lists.newArrayList();
-		for (E type : categoryType.getEnumConstants()) {
-			list.add(type.name());
-		}
-		return list.toArray(new String[0]);
+		return categories;
 	}
+
 	
 }

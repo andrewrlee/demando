@@ -21,6 +21,10 @@ public class DaoFactory {
 		}
 	}
 
+	public DBI getDBI(){
+		return jdbi;
+	}
+	
 	public <D> D getDao(Class<D> clazz) {
 		return jdbi.onDemand(clazz);
 	}

@@ -1,80 +1,55 @@
 package uk.co.optimisticpanda.dropwizard;
-import java.util.Collections;
-import java.util.List;
-
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import uk.co.optimisticpanda.dropwizard.dao.QuestionEventDao;
-import uk.co.optimisticpanda.dropwizard.dao.QuestionEventDao.Change;
 import uk.co.optimisticpanda.dropwizard.domain.Question;
-import uk.co.optimisticpanda.dropwizard.event.Event;
 import uk.co.optimisticpanda.dropwizard.event.EventList;
+import uk.co.optimisticpanda.dropwizard.event.EventList.FeedType;
 
-import com.google.common.base.Preconditions;
 import com.yammer.metrics.annotation.Timed;
 
-@Path("/question_event")
+@Path("/notifications")
 @Produces({MediaType.APPLICATION_ATOM_XML})
 public class QuestionEventsResource {
 
     @Context
     UriInfo uriInfo;
-    private final QuestionEventDao dao;
+	private QuestionEventService service;
 
     public QuestionEventsResource (QuestionEventDao dao) {
-        this.dao = dao;
+        this.service = new QuestionEventService(dao);
+    }
+
+    @GET
+    @Timed
+    @Path("/")
+    public EventList<Question<?>> getRecentEvents() {
+    	EventList<Question<?>> recentEvents = service.getRecentEvents();
+    	recentEvents.prepareLinks(getNotificationUriBuilder(), getPayloadUriBuilder(), FeedType.RECENT_EVENTS);
+    	return recentEvents;
     }
 
     @GET
     @Timed
     @Path("/{id}")
-    public EventList<Question<?>, Change> get(@PathParam("id") String id) {
-        return wrap(Collections.singletonList(dao.get(id)));
+    public EventList<Question<?>> getEvents(@PathParam("id") int id) {
+    	EventList<Question<?>> events = service.getEvents(id);
+    	events.prepareLinks(getNotificationUriBuilder(), getPayloadUriBuilder(), FeedType.ARCHIVE);
+    	return events;
     }
     
-    @GET
-    @Timed
-    @Path("/")
-    public EventList<Question<?>, Change> getAll() {
-    	return wrap(dao.getAll());
-    }
-
-    @POST
-    @Timed
-    @Path("/{id}")
-    public void update(@PathParam("uuid") String uuid, Event<Question<?>, Change> event) {
-    	Preconditions.checkArgument(uuid == event.getUuid(), "Trying to update wrong environment.");
-	//TODO write
-	//dao.update(question.getType(), question);
+    private UriBuilder getPayloadUriBuilder(){
+    	return uriInfo.getBaseUriBuilder().path(QuestionResource.class);
     }
     
-    @POST
-    @Timed
-    @Path("/")
-    public void insert(Event<Question<?>, Change> event) {
-    	dao.insert(event.getEventType(), event);
+    private UriBuilder getNotificationUriBuilder(){
+    	return uriInfo.getBaseUriBuilder().path(QuestionEventsResource.class);
     }
-    
-    @DELETE
-    @Timed
-    @Path("/{uuid}")
-    public void delete(@PathParam("uuid") String id) {
-    	dao.delete(id);
-    }
-    
-    public EventList<Question<?>, Change> wrap(List<Event<Question<?>,Change>> events) {
-    	return new EventList<Question<?>,Change>(
-    		events,                               //
-    		Change.class,                         //
-    		uriInfo.getAbsolutePath().toString(), //
-    		uriInfo.getBaseUri().toString() + "question/");
-	}
 }

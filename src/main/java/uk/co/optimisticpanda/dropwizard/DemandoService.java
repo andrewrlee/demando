@@ -3,8 +3,8 @@ package uk.co.optimisticpanda.dropwizard;
 import static com.sun.jersey.api.core.ResourceConfig.PROPERTY_CONTAINER_REQUEST_FILTERS;
 import uk.co.optimisticpanda.dropwizard.dao.QuestionDao;
 import uk.co.optimisticpanda.dropwizard.dao.QuestionEventDao;
+import uk.co.optimisticpanda.dropwizard.event.GenericAtomSupport;
 import uk.co.optimisticpanda.dropwizard.util.DaoFactory;
-import uk.co.optimisticpanda.dropwizard.util.GenericAtomSupport;
 import uk.co.optimisticpanda.dropwizard.util.OdataContainerRequestFilter;
 
 import com.yammer.dropwizard.Service;

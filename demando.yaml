@@ -1,0 +1,15 @@
+database:  
+    driverClass: com.mysql.jdbc.Driver
+    user: root
+    password: 
+    url: jdbc:mysql://localhost:3306/demando
+
+http:
+  rootPath: /service/*    
+
+# Logging settings.
+#logging:
+
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+#  level: TRACE
+

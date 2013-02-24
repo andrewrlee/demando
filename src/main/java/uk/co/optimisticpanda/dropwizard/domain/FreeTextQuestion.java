@@ -14,13 +14,6 @@ public class FreeTextQuestion extends Question<FreeTextQuestion>{
 	public FreeTextQuestion() {
 	}
 	
-	public FreeTextQuestion(FreeTextQuestion question){
-		super(question);
-		this.inputType = question.inputType;
-		this.minChars = question.minChars;
-		this.maxChars = question.maxChars;
-	}
-
 	public int getMinChars() {
 		return minChars;
 	}
