@@ -59,14 +59,14 @@ public class LinkProvider {
 
 	private Optional<String> getPreviousFeedUrl() {
 		if (batch.getPreviousBatch().isPresent()) {
-			return Optional.of(workingEventFeedUrl() + "/" + batch.getPreviousBatch().get().getBatchNumber());
+			return Optional.of(workingEventFeedUrl() + "/" + batch.getPreviousBatch().get());
 		}
 		return Optional.<String> absent();
 	}
 
 	private Optional<String> getNextFeedUrl() {
 		if (batch.getNextBatch().isPresent()) {
-			return Optional.of(workingEventFeedUrl() + "/" + batch.getNextBatch().get().getBatchNumber());
+			return Optional.of(workingEventFeedUrl() + "/" + batch.getNextBatch().get());
 		}
 		return Optional.<String> absent();
 	}

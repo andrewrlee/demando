@@ -8,50 +8,47 @@ import uk.co.optimisticpanda.dropwizard.domain.Question;
 import uk.co.optimisticpanda.dropwizard.event.Event;
 import uk.co.optimisticpanda.dropwizard.event.EventList;
 import uk.co.optimisticpanda.dropwizard.util.batch.Batch;
-import uk.co.optimisticpanda.dropwizard.util.batch.BatchGenerator;
 
-import com.google.common.collect.Iterables;
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 
 public class QuestionEventService {
 
-	public enum ChangeType{
+	public enum ChangeType {
 		CREATE, UPDATE, DELETE;
-		public static String[] valuesAsStings(){
+		public static String[] valuesAsStings() {
 			List<String> strings = Lists.newArrayList();
-			for (ChangeType type: values()) {
+			for (ChangeType type : values()) {
 				strings.add(type.name());
 			}
 			return strings.toArray(new String[0]);
 		}
 	}
-	
+
 	private final QuestionEventDao dao;
-	
-	public QuestionEventService(QuestionEventDao dao){
+
+	public QuestionEventService(QuestionEventDao dao) {
 		this.dao = dao;
 	}
-	
-	public EventList<Question<?>> getRecentEvents(){
+
+	public EventList<Question<?>> getRecentEvents() {
 		Map<String, Object> minAndMax = dao.getMinAndMax();
-		List<Batch> batches = BatchGenerator.getBatches((Long)minAndMax.get("min"), (Long)minAndMax.get("max"), 20);
-		Batch last = Iterables.getLast(batches);
+		Batch last = Batch.getLastBatch((Long) minAndMax.get("min"), (Long) minAndMax.get("max"), 20);
 		List<Event<Question<?>>> results = dao.get(last.getFrom(), last.getTo());
 		return wrap(results, last);
 	}
-	
+
 	public EventList<Question<?>> getEvents(int id) {
 		Map<String, Object> minAndMax = dao.getMinAndMax();
-		List<Batch> batches = BatchGenerator.getBatches((Long)minAndMax.get("min"), (Long)minAndMax.get("max"), 20);
-		Batch batch = batches.get(id);
-		List<Event<Question<?>>> results = dao.get(batch.getFrom(), batch.getTo());
-		return wrap(results, batch);
+		Optional<Batch> batch = Batch.getBatch(id, (Long) minAndMax.get("min"), (Long) minAndMax.get("max"), 20);
+		if (!batch.isPresent()) {
+			return null;
+		}
+		return wrap(dao.get(batch.get().getFrom(), batch.get().getTo()), batch.get());
 	}
 
 	public EventList<Question<?>> wrap(List<Event<Question<?>>> events, Batch batch) {
-    	return new EventList<Question<?>>(events, ChangeType.valuesAsStings(), "Notifications", batch);
+		return new EventList<Question<?>>(events, ChangeType.valuesAsStings(), "Notifications", batch);
 	}
 
-
-	
 }

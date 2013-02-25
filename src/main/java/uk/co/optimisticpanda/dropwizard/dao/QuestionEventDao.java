@@ -33,7 +33,7 @@ public interface QuestionEventDao {
 	@SqlUpdate("insert into question_event(event_type, payload, createdDate, uuid) values (:category, :content, :createdDate, :uuid)")
 	void insert(@BindBean Event<Question<?>> event);
 	
-	@SqlQuery("select * from question_event where id >= :from and id < :to order by id desc")
+	@SqlQuery("select * from question_event where id >= :from and id <= :to order by id desc")
 	List<Event<Question<?>>> get(@Bind("from") long from, @Bind("to") long to);
 
 	@RegisterMapper(SingleRowMapMapper.class)
