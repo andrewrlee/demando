@@ -1,0 +1,9 @@
+
+<p>{{question.questionText}}</p>
+
+  {{#question.options}}
+    <label for="{{.}}">{{.}}</label>
+    <input type="radio" name="sex" id="{{.}}" value="{{.}}"><br>
+  {{/question.options}}
+
+{{> box}}

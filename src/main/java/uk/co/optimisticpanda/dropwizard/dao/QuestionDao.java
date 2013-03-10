@@ -18,6 +18,7 @@ import uk.co.optimisticpanda.dropwizard.domain.BooleanQuestion;
 import uk.co.optimisticpanda.dropwizard.domain.FreeTextQuestion;
 import uk.co.optimisticpanda.dropwizard.domain.Question;
 import uk.co.optimisticpanda.dropwizard.domain.QuestionType;
+import uk.co.optimisticpanda.dropwizard.domain.RadioButtonQuestion;
 import uk.co.optimisticpanda.dropwizard.util.CustomJdbiBinders.BindAsJson;
 import uk.co.optimisticpanda.dropwizard.util.CustomJdbiBinders.BindEnumName;
 
@@ -66,6 +67,8 @@ public interface QuestionDao {
 					return mapper.readValue(jsonRepresentation, BooleanQuestion.class);
 				case FREE_TEXT:
 					return mapper.readValue(jsonRepresentation, FreeTextQuestion.class);
+                                case MULTIPLE_CHOICE:
+                                        return mapper.readValue(jsonRepresentation, RadioButtonQuestion.class);
 				default:
 					throw new UnsupportedOperationException("Cannot handle:" + questionType);
 				}

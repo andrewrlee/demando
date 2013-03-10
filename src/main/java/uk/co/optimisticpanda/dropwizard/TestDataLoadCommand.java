@@ -49,7 +49,7 @@ public class TestDataLoadCommand extends EnvironmentCommand<DemandoConfiguration
 
 			Question<?> question = event.getPayload();
 
-			if (CREATE.equals(event.getCategory())) {
+			if (CREATE.name().equals(event.getCategory())) {
 				log.info("Creating Question: {}", question);
 				questionDao.insert(question.getType(), question);
 			}else{

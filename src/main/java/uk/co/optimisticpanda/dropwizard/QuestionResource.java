@@ -11,12 +11,13 @@ import javax.ws.rs.core.MediaType;
 
 import uk.co.optimisticpanda.dropwizard.dao.QuestionDao;
 import uk.co.optimisticpanda.dropwizard.domain.Question;
+import uk.co.optimisticpanda.dropwizard.views.QuestionView;
 
 import com.google.common.base.Preconditions;
 import com.yammer.metrics.annotation.Timed;
 
 @Path("/question")
-@Produces({MediaType.APPLICATION_JSON})
+@Produces({MediaType.TEXT_HTML})
 public class QuestionResource {
 
     private final QuestionDao dao;
@@ -27,8 +28,8 @@ public class QuestionResource {
     @GET
     @Timed
     @Path("/{id}")
-    public Question<?> getQuestion(@PathParam("id") long id) {
-        return dao.get(id);
+    public QuestionView getQuestion(@PathParam("id") long id) {
+        return new QuestionView(dao.get(id));
     }
     
     @GET

@@ -1,3 +1,7 @@
+%   What is your favourite colour? {RED, YELLOW , BLUE
+%   What is your worst day? {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY
+%   Who knows you best? {Your Cat, Your Parent, Jesus 
+%   How wealthy are you? {very, filthy rich, I have NOTHING!    
     What was the happiest moment of your life? The saddest?
     Who was the most important person in your life? Can you tell me about him or her?
     Who has been the biggest influence on your life? What lessons did that person teach you?

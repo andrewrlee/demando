@@ -1,22 +1,20 @@
 package uk.co.optimisticpanda.dropwizard.domain;
 
 import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.List;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 
-public class Questionnaire implements Iterable<Question<?>>{
+public class Questionnaire implements Iterable<Entry>{
 
-	private AtomicInteger count = new AtomicInteger();
-	private Map<Integer, Question<?>> questions = Maps.newLinkedHashMap();
+	private List<Entry> entries = Lists.newArrayList();
 	
-	public void add(Question<?> question){
-		questions.put(count.getAndIncrement(), question);
+	public void add(Entry entry){
+		entries.add(entry);
 	}
 
-	public Iterator<Question<?>> iterator() {
-		return questions.values().iterator();
+	public Iterator<Entry> iterator() {
+		return entries.iterator();
 	}
 	
 	

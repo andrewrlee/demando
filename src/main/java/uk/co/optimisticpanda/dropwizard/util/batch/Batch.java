@@ -26,7 +26,7 @@ public class Batch {
         Batch batch = new Batch(index, bottom + 1, top, previous, next);
         return Optional.of(batch);
     }
-
+        
     public static Batch getLastBatch(long min, long max, int batchSize) {
         int numberOfBatches = Long.valueOf((max - min) / batchSize).intValue();
         return getBatch(numberOfBatches, min, max, batchSize).get();
