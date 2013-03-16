@@ -1,4 +1,4 @@
-package uk.co.optimisticpanda.dropwizard;
+package uk.co.optimisticpanda.dropwizard.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import com.google.common.base.Charsets;
 import com.yammer.dropwizard.views.View;
 import com.yammer.dropwizard.views.ViewRenderer;
 
-public class ReloadableMustacheRenderer implements ViewRenderer{
+public class ReloadableMustacheRenderer implements ViewRenderer {
 
     public boolean isRenderable(View view) {
         return view.getTemplateName().endsWith(".mstch");
@@ -27,8 +27,8 @@ public class ReloadableMustacheRenderer implements ViewRenderer{
     public void render(final View view, Locale locale, OutputStream output) throws IOException, WebApplicationException {
         final OutputStreamWriter writer = new OutputStreamWriter(output, Charsets.UTF_8);
         try {
-            DefaultMustacheFactory factory = new DefaultMustacheFactory(){
- 
+            DefaultMustacheFactory factory = new DefaultMustacheFactory() {
+
                 public Reader getReader(String resourceName) {
                     final InputStream is = view.getClass().getResourceAsStream(resourceName);
                     if (is == null) {
@@ -36,7 +36,7 @@ public class ReloadableMustacheRenderer implements ViewRenderer{
                     }
                     return new BufferedReader(new InputStreamReader(is, Charsets.UTF_8));
                 }
-            };                
+            };
 
             final Mustache template = factory.compile(view.getTemplateName());
             template.execute(writer, view);
@@ -44,5 +44,5 @@ public class ReloadableMustacheRenderer implements ViewRenderer{
             writer.close();
         }
     }
-    
+
 }

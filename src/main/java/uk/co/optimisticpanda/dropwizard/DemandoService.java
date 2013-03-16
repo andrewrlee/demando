@@ -4,8 +4,6 @@ import static com.sun.jersey.api.core.ResourceConfig.PROPERTY_CONTAINER_REQUEST_
 import uk.co.optimisticpanda.dropwizard.dao.QuestionDao;
 import uk.co.optimisticpanda.dropwizard.dao.QuestionEventDao;
 import uk.co.optimisticpanda.dropwizard.event.GenericAtomSupport;
-import uk.co.optimisticpanda.dropwizard.util.DaoFactory;
-import uk.co.optimisticpanda.dropwizard.util.OdataContainerRequestFilter;
 
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.assets.AssetsBundle;
@@ -36,13 +34,11 @@ public class DemandoService extends Service<DemandoConfiguration> {
 
     @Override
     public void run(DemandoConfiguration configuration, Environment environment) {
-        DaoFactory factory = new DaoFactory(environment, configuration);
-
         environment.addProvider(GenericAtomSupport.class);
-        environment.setJerseyProperty(PROPERTY_CONTAINER_REQUEST_FILTERS, new OdataContainerRequestFilter());
 
-        environment.addResource(new QuestionResource(factory.getDao(QuestionDao.class)));
-        environment.addResource(new QuestionEventsResource(factory.getDao(QuestionEventDao.class)));
+        environment.addResource(new QuestionnaireResource());
+//        environment.addResource(new QuestionResource(factory.getDao(QuestionDao.class)));
+//        environment.addResource(new QuestionEventsResource(factory.getDao(QuestionEventDao.class)));
     }
 
 }
